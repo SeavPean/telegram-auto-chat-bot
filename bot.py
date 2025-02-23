@@ -1,16 +1,20 @@
-from telegram import Bot
-import time
+from telegram.ext import Updater, CommandHandler
 
-# Replace with your actual bot token and channel username
-BOT_TOKEN = "7329473272:AAGn0_p9RWpLMjQWlTuhUvP8I1DhK0lIvYs"
-CHANNEL_ID = "https://t.me/ppstore71"
+def start(update, context):
+    update.message.reply_text('Hello! welcome to P&P Store.')
 
-bot = Bot(token=BOT_TOKEN)
+def help(update, context):
+    update.message.reply_text('How can I assist you?')
 
-def send_message():
-    bot.send_message(chat_id=CHANNEL_ID, text="Hi there! Looking for something stylish? Let me help you. 😊")
+def main():
+    updater = Updater("7329473272:AAGn0_p9RWpLMjQWlTuhUvP8I1DhK0lIvYs", use_context=True)
+    dp = updater.dispatcher
+    
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("help", help))
+    
+    updater.start_polling()
+    updater.idle()
 
-# Run the bot to send a message every hour
-while True:
-    send_message()
-    time.sleep(3600)  # Wait for 1 hour
+if __name__ == '__main__':
+    main()
